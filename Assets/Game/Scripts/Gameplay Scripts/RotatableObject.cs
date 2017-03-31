@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ControllablePlatform : MonoBehaviour 
+public class RotatableObject : MonoBehaviour 
 {
 	public float turnSpeed;
 	public float minYRotation = -35f;
@@ -17,14 +17,14 @@ public class ControllablePlatform : MonoBehaviour
 	{
 		#if MOBILE_INPUT
 		if(!inverted)
-		currentRotation += CrossPlatformInputManager.GetAxisRaw("Vertical2") * turnSpeed * Time.deltaTime;
+		currentRotation += CrossPlatformInputManager.GetAxisRaw("Vertical") * turnSpeed * Time.deltaTime;
 		else
-		currentRotation += -CrossPlatformInputManager.GetAxisRaw("Vertical2") * turnSpeed * Time.deltaTime;
+		currentRotation += -CrossPlatformInputManager.GetAxisRaw("Vertical") * turnSpeed * Time.deltaTime;
 		#else
 		if(!inverted)
-			currentRotation += Input.GetAxisRaw("Vertical2") * turnSpeed * Time.deltaTime;
+			currentRotation += Input.GetAxisRaw("Vertical") * turnSpeed * Time.deltaTime;
 		else
-			currentRotation += -Input.GetAxisRaw("Vertical2") * turnSpeed * Time.deltaTime;
+			currentRotation += -Input.GetAxisRaw("Vertical") * turnSpeed * Time.deltaTime;
 		#endif
 
 		currentRotation = Mathf.Clamp(currentRotation, minYRotation, maxYRotation);

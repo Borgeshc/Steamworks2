@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class ControllablePulley : MonoBehaviour 
+public class MoveableObject : MonoBehaviour 
 {
 	public float horizontalSpeed;
 	public float verticalSpeed;
@@ -20,8 +20,8 @@ public class ControllablePulley : MonoBehaviour
 	void Update()
 	{
 		#if MOBILE_INPUT
-		horizontal += CrossPlatformInputManager.GetAxisRaw("Horizontal") * horizontalSpeed * Time.deltaTime;
-		vertical += CrossPlatformInputManager.GetAxisRaw("Vertical") * verticalSpeed * Time.deltaTime;
+		horizontal += CrossPlatformInputManager.GetAxisRaw("Horizontal2") * (horizontalSpeed * .5f)* Time.deltaTime;
+		vertical += CrossPlatformInputManager.GetAxisRaw("Vertical2") * (verticalSpeed * .5f) * Time.deltaTime;
 		#else
 		horizontal += Input.GetAxisRaw("Horizontal") * horizontalSpeed * Time.deltaTime;
 		vertical += Input.GetAxisRaw("Vertical") * verticalSpeed * Time.deltaTime;
