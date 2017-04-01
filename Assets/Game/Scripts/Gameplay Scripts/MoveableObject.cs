@@ -14,6 +14,9 @@ public class MoveableObject : MonoBehaviour
 	public float minYClamp;
 	public float maxYClamp;
 
+    public bool hasVerticalMovement;
+    public bool hasHorizontalMovement;
+
 	float horizontal;
 	float vertical;
 
@@ -30,6 +33,10 @@ public class MoveableObject : MonoBehaviour
 		horizontal = Mathf.Clamp(horizontal, minXClamp, maxXClamp);
 		vertical = Mathf.Clamp(vertical, minYClamp, maxYClamp);
 
-		transform.position = new Vector3 (horizontal, vertical,0);
-	}
+        if(hasVerticalMovement)
+		    transform.position = new Vector3 (transform.position.x, vertical,0);
+
+        if (hasHorizontalMovement)
+            transform.position = new Vector3(horizontal, transform.position.y, 0);
+    }
 }
