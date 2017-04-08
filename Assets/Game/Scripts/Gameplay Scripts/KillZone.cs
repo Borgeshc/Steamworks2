@@ -15,7 +15,7 @@ public class KillZone : MonoBehaviour
 	{
 		if (other.tag == "Player") 
 		{
-			other.gameObject.transform.position = playerSpawnPoint.transform.position;
+            Destroy(other);
 		}
 	}
 }

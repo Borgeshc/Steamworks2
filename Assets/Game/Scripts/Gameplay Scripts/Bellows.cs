@@ -6,7 +6,7 @@ public class Bellows : MonoBehaviour
 {
 	public float force;
 	public bool inverted;
-    bool isBlowing;
+    public bool isBlowing;
     public ToggleScript toggleScript;
 
     void OnEnable()

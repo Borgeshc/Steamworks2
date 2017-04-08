@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScissorClaw : MonoBehaviour
 {
+    public Animator anim;
 	GameObject player;
 
 	void OnTriggerEnter(Collider other)
@@ -13,6 +14,7 @@ public class ScissorClaw : MonoBehaviour
 			player = other.gameObject;
 			other.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
 			other.transform.parent = this.transform;
+            StartCoroutine(Animate());
 		}
 		else if (other.transform.tag.Equals ("ScissorClawEnd")) 
 		{
@@ -23,4 +25,11 @@ public class ScissorClaw : MonoBehaviour
 			}
 		}
 	}
+
+    IEnumerator Animate()
+    {
+        anim.SetBool("Activate", true);
+        yield return new WaitForSeconds(12);
+        anim.SetBool("Activate", false);
+    }
 }
