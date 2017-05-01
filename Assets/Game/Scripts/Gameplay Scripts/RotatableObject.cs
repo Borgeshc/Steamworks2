@@ -12,15 +12,15 @@ public class RotatableObject : MonoBehaviour
 	Quaternion yRotation;
 
 	public bool inverted;
-    public enum Rotation
-    {
-        NONE,
-        NEGX, POSX,
-        NEGY, POSY,
-        NEGZ, POSZ
-    };
+    //public enum Rotation
+    //{
+    //    NONE,
+    //    NEGX, POSX,
+    //    NEGY, POSY,
+    //    NEGZ, POSZ
+    //};
 
-    public Rotation myRotation = Rotation.NONE;
+    //public Rotation myRotation = Rotation.NONE;
     
     private void Start()
     {
@@ -29,41 +29,44 @@ public class RotatableObject : MonoBehaviour
 
 	void Update()
 	{
-		#if MOBILE_INPUT
-		if(!inverted)rotation
-		currentRotation = CrossPlatformInputManager.GetAxisRaw("Vertical");
-		else
-		currentRotation = -CrossPlatformInputManager.GetAxisRaw("Vertical");
-		#else
+#if MOBILE_INPUT
+        if (!inverted)
+            currentRotation += CrossPlatformInputManager.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
+        else
+            currentRotation += -CrossPlatformInputManager.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
+#else
 		if(!inverted)
-			currentRotation = Input.GetAxis("Vertical");
+			currentRotation += Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
 		else
-			currentRotation = -Input.GetAxis("Vertical");
-		#endif
+			currentRotation += -Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
+#endif
 
-		//currentRotation = Mathf.Clamp(currentRotation, minYRotation, maxYRotation);
-        switch (myRotation)
-        {
-            case Rotation.NONE:
-                break;
-            case Rotation.NEGX:
-                transform.Rotate(Vector3.left * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-            case Rotation.POSX:
-                transform.Rotate(Vector3.right * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-            case Rotation.NEGY:
-                transform.Rotate(Vector3.down * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-            case Rotation.POSY:
-                transform.Rotate(Vector3.up * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-            case Rotation.NEGZ:
-                transform.Rotate(Vector3.back * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-            case Rotation.POSZ:
-                transform.Rotate(Vector3.forward * currentRotation * rotationSpeed * Time.deltaTime);
-                break;
-        }
-	}
+        currentRotation = Mathf.Clamp(currentRotation, minYRotation, maxYRotation);
+        transform.rotation = Quaternion.identity * Quaternion.AngleAxis(currentRotation, transform.forward);
+
+        //currentRotation = Mathf.Clamp(currentRotation, minYRotation, maxYRotation);
+        //switch (myRotation)
+        //{
+        //    case Rotation.NONE:
+        //        break;
+        //    case Rotation.NEGX:
+        //        transform.Rotate(Vector3.left * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //    case Rotation.POSX:
+        //        transform.Rotate(Vector3.right * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //    case Rotation.NEGY:
+        //        transform.Rotate(Vector3.down * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //    case Rotation.POSY:
+        //        transform.Rotate(Vector3.up * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //    case Rotation.NEGZ:
+        //        transform.Rotate(Vector3.back * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //    case Rotation.POSZ:
+        //        transform.Rotate(Vector3.forward * currentRotation * rotationSpeed * Time.deltaTime);
+        //        break;
+        //}
+	}    
 }
