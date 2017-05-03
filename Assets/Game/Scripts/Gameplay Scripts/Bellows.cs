@@ -8,24 +8,6 @@ public class Bellows : MonoBehaviour
 	public bool inverted;
     public bool isBlowing;
     public ToggleScript toggleScript;
-
-    void OnEnable()
-    {
-        if (toggleScript != null)
-        {
-            toggleScript.OnToggle += ToggleOn;
-            toggleScript.OnExit += ToggleOff;
-        }
-    }
-
-    void OnDisable()
-    {
-        if (toggleScript != null)
-        {
-            toggleScript.OnToggle -= ToggleOn;
-            toggleScript.OnExit -= ToggleOff;
-        }
-    }
     
     void ToggleOn()
     {

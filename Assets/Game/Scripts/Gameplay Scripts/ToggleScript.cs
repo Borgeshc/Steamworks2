@@ -4,19 +4,62 @@ using UnityEngine;
 
 public class ToggleScript : MonoBehaviour {
 
-    //public Behaviour targetObject;
+    public enum Actions
+    {
+        Animation,
+        BoolChange,
+        Instantiate
+    };
 
-    public delegate void Toggle();
-    public event Toggle OnToggle;
-    public event Toggle OnExit;
+    public Actions action = Actions.Animation;
+
+    //Animation variables
+    public Animator anim;
+    public string animParameter;
+    public float animDelay;
+
+    //BoolChange variables
+    public MonoBehaviour targetScript;
+    public string methodName;
+    public float boolDelay;
+
+    //Instantiate variables
+    public GameObject spawnable;
+    public Vector3 position;
+    public Vector3 rotation;
+    public float spawnDelay;
 
 	void OnTriggerEnter(Collider other)
     {
-        OnToggle();            
+        switch(action)
+        {
+            case Actions.Animation:
+                StartCoroutine(StartAnimation());
+                break;
+            case Actions.BoolChange:
+                ChangeBool();
+                break;
+            case Actions.Instantiate:
+                StartCoroutine(InstantiateObject());
+                break;
+        }
     }
 
-    void OnTriggerExit(Collider other)
+    IEnumerator StartAnimation()
     {
-        OnExit();
+        yield return new WaitForSeconds(animDelay);
+        anim.Play(animParameter);
+    }
+
+    void ChangeBool()
+    {
+        targetScript.Invoke(methodName, boolDelay);
+    }
+
+    IEnumerator InstantiateObject()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        GameObject clone = Instantiate(spawnable, position, Quaternion.Euler(rotation)) as GameObject;
+        clone.name = spawnable.name;
     }
 }
